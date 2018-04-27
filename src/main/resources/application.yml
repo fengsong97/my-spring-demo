@@ -34,12 +34,7 @@ logging:
   path: .
   level:
     root: INFO
-    com.kanche.billing: INFO
-    com.kanche.authentication: ERROR
-    org.springframework.web: ERROR
-    com.github.binarywang.demo.wxpay: DEBUG
-    com.github.binarywang.wxpay: DEBUG
-
+    com.fengsong97.spring.demo.services.impl: INFO # ERROR DEBUG
 
 
 customVariables:

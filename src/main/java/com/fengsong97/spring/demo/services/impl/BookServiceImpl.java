@@ -30,7 +30,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookEntity findOne(Long id) {
         BookEntity bookEntity = bookRepository.findById(id).orElse(null);
-        logger.info("查询完成: "+ JSONObject.toJSONString(bookEntity));
+        logger.info("查询完成: \n{}--{}",JSONObject.toJSONString(bookEntity),"hello");
         return bookEntity;
     }
 
