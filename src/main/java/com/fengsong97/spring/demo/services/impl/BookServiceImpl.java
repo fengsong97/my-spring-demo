@@ -10,6 +10,10 @@ import com.fengsong97.spring.demo.services.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,14 +34,30 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookEntity findOne(Long id) {
         BookEntity bookEntity = bookRepository.findById(id).orElse(null);
-        logger.info("查询完成: \n{}--{}",JSONObject.toJSONString(bookEntity),"hello");
+        logger.info("查询完成: \n{}--{}", JSONObject.toJSONString(bookEntity), "hello");
         return bookEntity;
     }
 
     @Override
     public List<BookEntity> findAll() {
-        List<BookEntity> bookEntities = bookRepository.findAll();
-        return bookEntities;
+        List<BookEntity> bookEntityList = bookRepository.findAll();
+        return bookEntityList;
+    }
+
+    @Override
+    public Page<BookEntity> findPage(int page, int size) {
+        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Pageable pageable = new PageRequest(page, size, sort);
+        Page<BookEntity> bookPage = bookRepository.findAll(pageable);
+        return bookPage;
+    }
+
+    @Override
+    public Page<BookEntity> findPageByEnable(int page, int size) {
+        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Pageable pageable = new PageRequest(page, size, sort);
+        Page<BookEntity> bookPage = bookRepository.findQuery(true, pageable);
+        return bookPage;
     }
 
     @Override

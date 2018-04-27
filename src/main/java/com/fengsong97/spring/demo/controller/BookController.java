@@ -9,11 +9,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.mapstruct.Context;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 创建人 fengsong
@@ -29,11 +31,11 @@ public class BookController {
 
     @ApiOperation(value = "查看一本书详情", notes = "")
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String BookFindOne(@PathVariable("id") Long id,
-                              @Context HttpServletRequest request) {
+    public BookEntity BookFindOne(@PathVariable("id") Long id,
+                                  @Context HttpServletRequest request) {
 
         BookEntity bookEntity = bookService.findOne(id);
-        return JSONObject.toJSONString(bookEntity);
+        return bookEntity;
     }
 
     @ApiOperation(value = "创建一本书", notes = "")
@@ -63,5 +65,15 @@ public class BookController {
         return "已删除";
     }
 
+    @ApiOperation(value = "查询书列表带分页", notes = "")
+    @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Page<BookEntity> BookList(@RequestParam(defaultValue = "0", required = false) int page,
+                                     @RequestParam(defaultValue = "2", required = false) int size,
+                                     @RequestParam(defaultValue = "0", required = false) String enable,
+                                     @Context HttpServletRequest request) {
+
+        Page<BookEntity> bookEntityPage = bookService.findPageByEnable(page, size);
+        return bookEntityPage;
+    }
 
 }

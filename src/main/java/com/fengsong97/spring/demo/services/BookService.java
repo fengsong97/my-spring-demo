@@ -2,6 +2,7 @@ package com.fengsong97.spring.demo.services;
 
 import com.fengsong97.spring.demo.entity.book.BookEntity;
 import com.fengsong97.spring.demo.request.BookEntityRequest;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -21,4 +22,9 @@ public interface BookService {
     BookEntity put(Long id, BookEntityRequest bookEntityRequest);
 
     void delete(Long id);
+
+    Page<BookEntity> findPage(int page, int size);
+
+    Page<BookEntity> findPageByEnable(int page, int size);
+
 }
