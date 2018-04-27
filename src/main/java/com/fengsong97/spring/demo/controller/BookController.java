@@ -48,8 +48,8 @@ public class BookController {
     }
 
     @ApiOperation(value = "更新一本书", notes = "")
-    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String BookPut(@PathVariable("id") Long id,
+    @PutMapping( produces = MediaType.APPLICATION_JSON_VALUE)
+    public String BookPut(@RequestParam Long id,
                           @ApiParam(value = "更新一本书的data", required = true) @Valid @RequestBody BookEntityRequest bookEntityRequest,
                           @Context HttpServletRequest request) {
 
@@ -57,12 +57,22 @@ public class BookController {
         return JSONObject.toJSONString(bookEntity);
     }
 
+    @ApiOperation(value = "更新书状态", notes = "")
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public BookEntity BookUnEnable(@PathVariable("id") Long id,
+                                   @RequestParam(defaultValue = "true", required = false) Boolean enable,
+                                   @Context HttpServletRequest request) {
+
+        BookEntity bookEntity = bookService.bookAbleChange(id,enable);
+        return bookEntity;
+    }
+
     @ApiOperation(value = "删除一本书", notes = "")
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String BookDelete(@PathVariable("id") Long id, @Context HttpServletRequest request) {
 
-        bookService.delete(id);
-        return "已删除";
+//        bookService.delete(id);
+        return "接口被禁用";
     }
 
     @ApiOperation(value = "查询书列表带分页", notes = "")

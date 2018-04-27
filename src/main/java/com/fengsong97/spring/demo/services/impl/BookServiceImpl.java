@@ -81,6 +81,16 @@ public class BookServiceImpl implements BookService {
         return bookEntity;
     }
 
+
+    @Override
+    public BookEntity bookAbleChange(Long id, Boolean able) {
+        BookEntity bookEntity = bookRepository.getOne(id);
+        bookEntity.setEnable(able);
+        bookEntity = bookRepository.save(bookEntity);
+        logger.info("书 id:" + id + "状态已改为" + able);
+        return bookEntity;
+    }
+
     @Override
     public void delete(Long id) {
         bookRepository.deleteById(id);

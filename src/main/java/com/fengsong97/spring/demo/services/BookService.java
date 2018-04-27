@@ -21,6 +21,8 @@ public interface BookService {
 
     void delete(Long id);
 
-    Page<BookEntity> findPage(int page, int size,Boolean enable);
+    BookEntity bookAbleChange(Long id, Boolean able);
+
+    Page<BookEntity> findPage(int page, int size, Boolean enable);
 
 }
