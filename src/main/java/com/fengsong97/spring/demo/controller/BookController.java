@@ -66,13 +66,13 @@ public class BookController {
     }
 
     @ApiOperation(value = "查询书列表带分页", notes = "")
-    @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<BookEntity> BookList(@RequestParam(defaultValue = "0", required = false) int page,
                                      @RequestParam(defaultValue = "2", required = false) int size,
-                                     @RequestParam(defaultValue = "0", required = false) String enable,
+                                     @RequestParam(defaultValue = "true", required = false) Boolean enable,
                                      @Context HttpServletRequest request) {
 
-        Page<BookEntity> bookEntityPage = bookService.findPageByEnable(page, size);
+        Page<BookEntity> bookEntityPage = bookService.findPage(page, size, enable);
         return bookEntityPage;
     }
 

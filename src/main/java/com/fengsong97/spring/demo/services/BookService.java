@@ -15,16 +15,12 @@ public interface BookService {
 
     BookEntity findOne(Long id);
 
-    List<BookEntity> findAll();
-
     BookEntity save(BookEntityRequest bookEntityRequest);
 
     BookEntity put(Long id, BookEntityRequest bookEntityRequest);
 
     void delete(Long id);
 
-    Page<BookEntity> findPage(int page, int size);
-
-    Page<BookEntity> findPageByEnable(int page, int size);
+    Page<BookEntity> findPage(int page, int size,Boolean enable);
 
 }

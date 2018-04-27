@@ -38,25 +38,12 @@ public class BookServiceImpl implements BookService {
         return bookEntity;
     }
 
-    @Override
-    public List<BookEntity> findAll() {
-        List<BookEntity> bookEntityList = bookRepository.findAll();
-        return bookEntityList;
-    }
 
     @Override
-    public Page<BookEntity> findPage(int page, int size) {
+    public Page<BookEntity> findPage(int page, int size, Boolean enable) {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(page, size, sort);
-        Page<BookEntity> bookPage = bookRepository.findAll(pageable);
-        return bookPage;
-    }
-
-    @Override
-    public Page<BookEntity> findPageByEnable(int page, int size) {
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Pageable pageable = new PageRequest(page, size, sort);
-        Page<BookEntity> bookPage = bookRepository.findQuery(true, pageable);
+        Page<BookEntity> bookPage = bookRepository.findPage(enable, pageable);
         return bookPage;
     }
 
@@ -79,7 +66,7 @@ public class BookServiceImpl implements BookService {
         bookEntity.setPressEnity(pressEnityList);
 
         bookEntity = bookRepository.save(bookEntity);
-        logger.info("保存完成: "+ JSONObject.toJSONString(bookEntity));
+        logger.info("保存完成: " + JSONObject.toJSONString(bookEntity));
         return bookEntity;
     }
 
@@ -90,7 +77,7 @@ public class BookServiceImpl implements BookService {
         bookEntity.setName(bookEntityRequest.getName());
         bookEntity.setDescription(bookEntityRequest.getDesciption());
         bookEntity = bookRepository.save(bookEntity);
-        logger.info("修改完成: "+ JSONObject.toJSONString(bookEntity));
+        logger.info("修改完成: " + JSONObject.toJSONString(bookEntity));
         return bookEntity;
     }
 

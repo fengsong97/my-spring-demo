@@ -17,5 +17,5 @@ import java.io.Serializable;
 public interface BookRepository extends JpaRepository<BookEntity, Serializable> {
 
     @Query(value = " from BookEntity b where b.enable= :enable")
-    Page<BookEntity> findQuery(@Param("enable") Boolean enable, Pageable pageable);
+    Page<BookEntity> findPage(@Param("enable") Boolean enable, Pageable pageable);
 }
